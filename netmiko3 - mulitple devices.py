@@ -12,10 +12,11 @@ for devices in devices_list:
     ios_device = {
         'device_type': 'cisco_ios',
         'ip': ip_address_of_device,
-        'username': 'david',
+        'username': 'cisco',
         'password': 'cisco'
     }
 
     net_connect = ConnectHandler(**ios_device)
     output = net_connect.send_config_set(commands_list)
     print (output)
+
