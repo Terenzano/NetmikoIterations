@@ -1,3 +1,6 @@
+from netmiko.ssh_exception import NetMikoTimeoutException
+from paramiko.ssh_exception import SSHException
+from netmiko.ssh_exception import AuthenticationException
 from netmiko import ConnectHandler
 from getpass import getpass
 
@@ -24,19 +27,19 @@ for devices in devices_list:
     try:
         net_connect = ConnectHandler(**ios_device)
     except (AuthenticationException):
-        print('Authentication failure: ' + ip_address_of_device)
+        print ('Authentication failure: ' + ip_address_of_device)
         continue
     except (NetMikoTimeoutException):
-        print('Timeout to device: ' + ip_address_of_device)
+        print ('Timeout to device: ' + ip_address_of_device)
         continue
     except (EOFError):
-        print('End of file while attempting device: ' + ip_address_of_device)
+        print ('End of file while attempting device: ' + ip_address_of_device)
         continue
     except (SSHException):
-        print('SSH issue. Are you sure SSH is enabled on device: ' + ip_address_of_device)
+        print ('SSH issue. Are you sure SSH is enabled on device: ' + ip_address_of_device)
         continue
     except Exception as unknow_error:
-        print('Some other error ' + unknow_error)
+        print ('Some other error ' + unknow_error)
         continue
     
     
