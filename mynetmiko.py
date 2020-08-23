@@ -1,4 +1,9 @@
 from netmiko import ConnectHandler
+from getpass get getpass
+
+username = raw_input('Enter your SSH username: ')
+password = getpass()
+
 
 with open('commands_file_switch') as f:
     commands_list = f.read().splitlines()
@@ -12,8 +17,8 @@ for devices in devices_list:
     ios_device = {
         'device_type' : 'cisco_ios',
         'ip' : ip_address_of_device,
-        'username' : 'cisco',
-        'password' : 'cisco'
+        'username' : username,
+        'password' : password
     }   
 
     net_connect = ConnectHandler(**ios_device)
