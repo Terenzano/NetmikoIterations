@@ -9,7 +9,10 @@ password = getpass()
 
 
 with open('commands_file_switch') as f:
-    commands_list = f.read().splitlines()
+    commands_list_switch = f.read().splitlines()
+
+    with open('commands_file_router') as f:
+    commands_list_router = f.read().splitlines()
 
 with open('devices_file') as f:
     devices_list = f.read().splitlines()
@@ -43,6 +46,36 @@ for devices in devices_list:
         continue
     
     
-    output = net_connect.send_config_set(commands_list)
-    print(output)
+ # Types of devices
+    list_versions = ['vios_l2-ADVENTERPRISEK9-M', 
+                     'VIOS-ADVENTERPRISEK9-M',
+                     'C1900-UNIVERSALK9-M',
+                     'C3750-ADVIPSERVICESK9-M'
+                     ]
+
+    # Check software versions
+    for software_ver in list_versions:
+        print ('Checking for ' + software_ver)
+        output_version = net_connect.send_command('show version')
+        int_version = 0 # Reset integer value
+        int_version = output_version.find(software_ver) # Check software version
+        if int_version > 0:
+            print ('Software version found: ' + software_ver)
+            break
+        else:
+            print ('Did not find ' + software_ver)
+
+    if software_ver == 'vios_l2-ADVENTERPRISEK9-M':
+        print ('Running ' + software_ver + ' commands')
+        output = net_connect.send_config_set(commands_list_switch)
+    elif software_ver == 'VIOS-ADVENTERPRISEK9-M':
+        print ('Running ' + software_ver + ' commands')
+        output = net_connect.send_config_set(commands_list_router)
+    elif software_ver == 'C1900-UNIVERSALK9-M':
+        print ('Running ' + software_ver + ' commands')
+        output = net_connect.send_config_set(commands_list_phyrouter)
+    elif software_ver == 'C3750-ADVIPSERVICESK9-M':
+        print ('Running ' + software_ver + ' commands')
+        output = net_connect.send_config_set(commands_list_switch)    
+    print (output) 
 
