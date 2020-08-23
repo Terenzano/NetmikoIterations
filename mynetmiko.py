@@ -11,7 +11,7 @@ for devices in devices_list:
     ip_address_of_device = devices
     ios_device = {
         'device_type' : 'cisco_ios',
-        'ip' : 'ip_address_of_device',
+        'ip' : ip_address_of_device,
         'username' : 'cisco',
         'password' : 'cisco'
     }   
