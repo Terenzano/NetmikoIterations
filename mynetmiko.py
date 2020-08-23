@@ -1,5 +1,5 @@
 from netmiko import ConnectHandler
-from getpass get getpass
+from getpass import getpass
 
 username = raw_input('Enter your SSH username: ')
 password = getpass()
