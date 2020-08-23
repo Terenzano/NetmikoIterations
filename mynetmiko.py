@@ -1,13 +1,22 @@
 from netmiko import ConnectHandler
 
-iosv_l2_s1 = {
-    'device_type' : 'cisco_ios',
-    'ip' : '192.168.122.72',
-    'username' : 'cisco',
-    'password' : 'cisco'
-}
+with open('commands_file_switch') as f:
+    commands_list = f.read().splitlines()
 
-net_connect = ConnectHandler(**iosv_l2_s1)
-output = net_connect.send_command('show ip interface brief')
-print(output)
+with open('devices_file') as f:
+    devices_list = f.read().splitlines()
+
+for devices in devices_list:
+    print('Connecting to device ' + devices)
+    ip_address_of_device = devices
+    ios_device = {
+        'device_type' : 'cisco_ios',
+        'ip' : 'ip_address_of_device',
+        'username' : 'cisco',
+        'password' : 'cisco'
+    }   
+
+    net_connect = ConnectHandler(**ios_device)
+    output = net_connect.send_config_set(commands_list)
+    print(output)
 
